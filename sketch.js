@@ -10,7 +10,7 @@ let canvasHeight = 480;
 zoneWidth = 0.05;
 zoneHeight = 0.3; 
 
-function onActiveZoneChange(zone) {
+   function onActiveZoneChange(zone) {
   let soundIndex = myVida.activeZones.indexOf(zone);
   for (let i = 0; i < sounds.length; i++) {
     if (i !== soundIndex) {
@@ -18,7 +18,7 @@ function onActiveZoneChange(zone) {
     }
   }
   if (soundIndex >= 0) {
-    sounds[soundIndex].loop();
+    sounds[soundIndex].play();
   }
 }
 
@@ -65,7 +65,7 @@ function initCaptureDevice() {
 
 function trigger(zone) {
   let soundIndex = myVida.activeZones.indexOf(zone);
-  sounds[soundIndex].loop();
+  sounds[soundIndex].play();
 }
 
 function setup() {
