@@ -10,18 +10,6 @@ let canvasHeight = 480;
 zoneWidth = 0.05;
 zoneHeight = 0.3; 
 
-   function onActiveZoneChange(zone) {
-  let soundIndex = myVida.activeZones.indexOf(zone);
-  for (let i = 0; i < sounds.length; i++) {
-    if (i !== soundIndex) {
-      sounds[i].stop();
-    }
-  }
-  if (soundIndex >= 0) {
-    sounds[soundIndex].play();
-  }
-}
-
 function preload() {
   console.log('[preload] loading samples...');
 
@@ -173,56 +161,6 @@ function draw() {
     */
     background(255, 0, 0);
   }
-}
-
-/*
-  This function is called by VIDA when one of the zones changes status (from
-  triggered to free or vice versa). An object that stores zone data is passed
-  as the parameter to the function.
-*/
-function onActiveZoneChange(_vidaActiveZone) {
-  /*
-    Having access directly to objects that store active zone data, we can read
-    or modify the values of individual parameters. Here is a list of parameters
-    to which we have access:
-      normX, normY, normW, normH - normalized coordinates of the rectangle in
-    which active zone is contained (bounding box); you can change these
-    parameters if you want to move the zone or change it's size;
-      isEnabledFlag - if you want to disable the processing of a given active
-    zone without deleting it, this flag will definitely be useful to you; if
-    it's value is "true", the zone will be tested, if the variable value is
-    "false", the zone will not be tested;
-      isMovementDetectedFlag - the value of this flag will be "true" if motion
-    is detected within the zone; otherwise, the flag value will be "false";
-      isChangedFlag - this flag will be set to "true" if the status (value of
-    isMovementDetectedFlag) of the zone has changed in the current frame;
-    otherwise, the flag value will be "false";
-      changedTime, changedFrameCount - the moment - expressed in milliseconds
-    and frames - in which the zone has recently changed it's status (value of
-    isMovementDetectedFlag);
-      normFillFactor - ratio of the area of the zone in which movement was
-    detected to the whole surface of the zone
-      normFillThreshold - ratio of the area of the zone in which movement
-    was detected to the total area of the zone required to be considered that
-    there was a movement detected in the zone; you can modify this parameter
-    if you need to be able to set the threshold of the zone individually (as
-    opposed to function
-    [your vida object].setActiveZonesNormFillThreshold(normVal); 
-    which sets the threshold value globally for all zones);
-      id - zone identifier (integer or string);
-      onChange - a function that will be called when the zone changes status
-    (when value of this.isMovementDetectedFlag will be changed); the object
-    describing the current zone will be passed to the function as a parameter.
-  */
-  // print zone id and status to console...
-  console.log(`zone: ${_vidaActiveZone.id} status: ${_vidaActiveZone.isMovementDetectedFlag}`);
-  playSample(sounds[_vidaActiveZone.id])
-}
-
-function playSample(_sample) {
-  if(_sample === null) {console.log('[playSample] _sample === null'); return;}
-  if(_sample === undefined) {console.log('[playSample] _sample === undefined'); return;}
-  if(!_sample.isPlaying()) _sample.play();
 }
 
 /*
