@@ -53,7 +53,14 @@ function initCaptureDevice() {
 
 function trigger(zone) {
   let soundIndex = myVida.activeZones.indexOf(zone);
-  sounds[soundIndex].play();
+  let sound = sounds[soundIndex];
+
+  if (!sound._playing) {
+    sounds[soundIndex].play();
+    console.log(`Starting playback of sound #${soundIndex}`);
+  } else {
+    console.log(`Will not start playing sound #${soundIndex} (already playing)`);
+  }
 }
 
 function setup() {
